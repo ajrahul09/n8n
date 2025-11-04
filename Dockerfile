@@ -1,14 +1,14 @@
-# Base image: official n8n
+# Stage 1: Base official image
 FROM n8nio/n8n:latest
 
-# Set working directory
-WORKDIR /home/node/
+# Ensure correct working directory
+WORKDIR /data
 
-# Fix permissions warning
+# Set permissions enforcement
 ENV N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
 
-# Expose n8n default port
+# Expose default port
 EXPOSE 5678
 
-# Use the absolute path to n8n binary to avoid "command not found" errors
-CMD ["node", "/usr/local/lib/node_modules/n8n/bin/n8n"]
+# Use npx to run n8n via the globally installed package
+ENTRYPOINT ["npx", "n8n", "start"]
